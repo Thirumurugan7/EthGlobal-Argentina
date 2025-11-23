@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import OpportunityCard from '@/components/OpportunityCard';
+import Navigation from '@/components/Navigation';
 import { mockOpportunities, getAllJudgments } from '@/lib/data';
 import { getJudgmentsByOpportunityId } from '@/lib/data';
-import { getFavorites, getComparisonList } from '@/lib/storage';
 import { InvestmentOpportunity } from '@/types';
 
 type SortOption = 'name' | 'funding' | 'valuation' | 'date' | 'score';
@@ -17,12 +16,13 @@ export default function Home() {
   const [sortBy, setSortBy] = useState<SortOption>('name');
   const [showFavorites, setShowFavorites] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [comparisonCount, setComparisonCount] = useState(0);
 
   useEffect(() => {
     const updateState = () => {
-      setFavorites(getFavorites());
-      setComparisonCount(getComparisonList().length);
+      if (typeof window !== 'undefined') {
+        const { getFavorites } = require('@/lib/storage');
+        setFavorites(getFavorites());
+      }
     };
     updateState();
     const interval = setInterval(updateState, 500);
@@ -83,68 +83,32 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-black">
-      <header className="border-b border-zinc-200 bg-white dark:bg-zinc-900 dark:border-zinc-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-                Investment Judging Platform
-              </h1>
-              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                Review and evaluate investment opportunities
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <Link
-                href="/favorites"
-                className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors relative"
-              >
-                Favorites
-                {favorites.length > 0 && (
-                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center">
-                    {favorites.length}
-                  </span>
-                )}
-              </Link>
-              <Link
-                href="/compare"
-                className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors relative"
-              >
-                Compare
-                {comparisonCount > 0 && (
-                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-blue-600 text-white text-xs rounded-full flex items-center justify-center">
-                    {comparisonCount}
-                  </span>
-                )}
-              </Link>
-              <Link
-                href="/analytics"
-                className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
-              >
-                Analytics
-              </Link>
-            </div>
+      <Navigation />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">Dashboard</h1>
+          <p className="text-zinc-600 dark:text-zinc-400">
+            Review and evaluate investment opportunities
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+            <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Total Opportunities</div>
+            <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{mockOpportunities.length}</div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-3">
-              <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Total Opportunities</div>
-              <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{mockOpportunities.length}</div>
-            </div>
-            <div className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-3">
-              <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Total Judgments</div>
-              <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{totalJudgments}</div>
-            </div>
-            <div className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-3">
-              <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Judged</div>
-              <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{judgedCount}</div>
-            </div>
-            <div className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-3">
-              <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Favorites</div>
-              <div className="text-xl font-bold text-red-600 dark:text-red-400">{favorites.length}</div>
-            </div>
+          <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+            <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Total Judgments</div>
+            <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{totalJudgments}</div>
+          </div>
+          <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+            <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Judged</div>
+            <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{judgedCount}</div>
+          </div>
+          <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+            <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Favorites</div>
+            <div className="text-xl font-bold text-red-600 dark:text-red-400">{favorites.length}</div>
           </div>
         </div>
-      </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6 space-y-4">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Navigation from '@/components/Navigation';
 import { getComparisonList, removeFromComparison, clearComparison } from '@/lib/storage';
 import { getOpportunityById, getAllJudgments } from '@/lib/data';
 import { formatCurrency } from '@/lib/utils';
@@ -45,20 +46,7 @@ export default function ComparePage() {
   if (opportunities.length === 0) {
     return (
       <div className="min-h-screen bg-zinc-50 dark:bg-black">
-        <header className="border-b border-zinc-200 bg-white dark:bg-zinc-900 dark:border-zinc-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <Link
-              href="/"
-              className="inline-flex items-center text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to Dashboard
-            </Link>
-            <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mt-4">Compare Opportunities</h1>
-          </div>
-        </header>
+        <Navigation />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <p className="text-zinc-500 dark:text-zinc-400 text-lg mb-4">
@@ -84,30 +72,22 @@ export default function ComparePage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-black">
-      <header className="border-b border-zinc-200 bg-white dark:bg-zinc-900 dark:border-zinc-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="inline-flex items-center text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to Dashboard
-            </Link>
-            <button
-              onClick={handleClear}
-              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Clear All
-            </button>
+      <Navigation />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
+              Compare Opportunities ({opportunities.length}/4)
+            </h1>
+            <p className="text-zinc-600 dark:text-zinc-400">Side-by-side comparison of investment opportunities</p>
           </div>
-          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mt-4">
-            Compare Opportunities ({opportunities.length}/4)
-          </h1>
+          <button
+            onClick={handleClear}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Clear All
+          </button>
         </div>
-      </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="overflow-x-auto">
