@@ -110,7 +110,6 @@ export default function Home() {
           </div>
         </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6 space-y-4">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
@@ -187,9 +186,9 @@ export default function Home() {
                 hasJudgment={opportunity.hasJudgment}
               />
             ))}
-        </div>
+          </div>
         )}
-      </main>
+      </div>
     </div>
   );
 }
