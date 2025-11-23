@@ -7,6 +7,8 @@ import { getOpportunityById, getJudgmentsByOpportunityId } from '@/lib/data';
 import { formatCurrency } from '@/lib/utils';
 import ScoringForm from '@/components/ScoringForm';
 import JudgmentDisplay from '@/components/JudgmentDisplay';
+import FavoriteButton from '@/components/FavoriteButton';
+import ComparisonButton from '@/components/ComparisonButton';
 import { InvestmentOpportunity, Judgment } from '@/types';
 
 export default function OpportunityPage() {
@@ -85,24 +87,30 @@ export default function OpportunityPage() {
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-8 mb-6">
           <div className="flex items-start justify-between mb-6">
-            <div>
-              <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
-                {opportunity.companyName}
-              </h1>
-              <p className="text-lg text-zinc-600 dark:text-zinc-400">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">
+                  {opportunity.companyName}
+                </h1>
+                <FavoriteButton opportunityId={opportunity.id} size="lg" />
+              </div>
+              <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-3">
                 {opportunity.industry} • {opportunity.stage} • {opportunity.location}
               </p>
+              <div className="flex items-center gap-3">
+                <ComparisonButton opportunityId={opportunity.id} />
+                {opportunity.website && (
+                  <a
+                    href={opportunity.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Visit Website
+                  </a>
+                )}
+              </div>
             </div>
-            {opportunity.website && (
-              <a
-                href={opportunity.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Visit Website
-              </a>
-            )}
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">

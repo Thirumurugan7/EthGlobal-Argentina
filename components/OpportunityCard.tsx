@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { InvestmentOpportunity } from '@/types';
 import { formatCurrency } from '@/lib/utils';
+import FavoriteButton from './FavoriteButton';
+import ComparisonButton from './ComparisonButton';
 
 interface OpportunityCardProps {
   opportunity: InvestmentOpportunity;
@@ -22,6 +24,10 @@ export default function OpportunityCard({ opportunity, hasJudgment }: Opportunit
                   Judged
                 </span>
               )}
+              <div className="ml-auto flex items-center gap-2">
+                <FavoriteButton opportunityId={opportunity.id} size="sm" />
+                <ComparisonButton opportunityId={opportunity.id} />
+              </div>
             </div>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">
               {opportunity.industry} • {opportunity.stage} • {opportunity.location}

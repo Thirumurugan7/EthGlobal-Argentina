@@ -105,3 +105,11 @@ export function calculateOverallScore(scores: Judgment['scores']): number {
   return values.reduce((sum, score) => sum + score, 0) / values.length;
 }
 
+export function getAllJudgments(): Judgment[] {
+  return mockJudgments;
+}
+
+export function getAllOpportunities(): InvestmentOpportunity[] {
+  return mockOpportunities;
+}
+
