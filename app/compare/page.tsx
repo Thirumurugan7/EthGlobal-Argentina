@@ -89,7 +89,6 @@ export default function ComparePage() {
           </button>
         </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
             <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800">
@@ -222,7 +221,7 @@ export default function ComparePage() {
             </table>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

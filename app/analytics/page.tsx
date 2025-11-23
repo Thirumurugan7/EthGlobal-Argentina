@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Navigation from '@/components/Navigation';
 import { getAllOpportunities, getAllJudgments } from '@/lib/data';
 import { getAnalytics, AnalyticsData } from '@/lib/analytics';
@@ -47,7 +48,6 @@ export default function AnalyticsPage() {
           </button>
         </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
             <div className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Total Opportunities</div>
@@ -217,7 +217,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
         )}
-      </main>
+      </div>
     </div>
   );
 }
